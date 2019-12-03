@@ -13,39 +13,43 @@ public class AppController extends Application {
     private RequestQueue requestQueue;
 
 
-    public static synchronized AppController getInstance( ) {
-      //  if (instance == null) {
-       //     instance = new AppController(context);
-     //   }
-        return instance;
-    }
 
     //Se hace el extend de aplication para poder crearle un onCreate(), hacemos esto para que sea nuestra clase que
+
     //Controlara toda la APP, para esto necesitamos decirle en Manifest en la linea de
     // <application
     //Colocar lo siguiente
     //        android:name=".controller.AppController" y eso nos permite desde cualquier clase poder tomar sus metodos.
-
     @Override
     public void onCreate() {
         super.onCreate();
-        //
         instance = this;
 
     }
-    //se obtiene el GetrequestQueue si no existe
-    public RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(this.getApplicationContext());
-        }
 
-        return requestQueue;
-
-    }
-    //se agrega a la cola la peticion
+    //Metodo mandado a llamar desde fuera recibe cualquier tipo de Request y manda a llamar getRequestQueue()
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
+
+
+    //Singleton de RequetQueue
+    public RequestQueue getRequestQueue() {
+        if (requestQueue == null)
+            requestQueue = Volley.newRequestQueue(this.getApplicationContext());
+
+        return requestQueue;
+    }
+
+    //Singleton AppController
+    public static synchronized AppController getInstance( ) {
+        return instance;
+
+    }
+
+
+
+
 
 
 
