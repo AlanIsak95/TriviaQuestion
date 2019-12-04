@@ -20,7 +20,7 @@ public class QuestionBank {
         private String URL = "https://raw.githubusercontent.com/curiousily/simple-quiz/master/script/statements-data.json";
 
 
-        //se crea peticion a espera de respuesta de Interfaz
+        //Metodo que regresa el LIST
         public List <Question> getQuestion(final AnswerAsyncResponse callback){
 
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -51,26 +51,20 @@ public class QuestionBank {
                                 }catch (Exception e){ }
 
                             }//fin For
-
-
                             if (callback != null) callback.processisFinish(questionArrayList);
-
-
                         }//Fin Response TRUE
                     },
 
-                    //Inicio Response False
+                    //Inicio Response Error
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) { }
                     }
-            );//fin de linea de declaracion
+                                                                      );//fin de linea de declaracion del jsonArrayRequest
 
 
-
-            //se manda a llamar app controller de esta manera ya que esta definido en el manifest name del application
+            //se manda a llamar app controller de esta manera, ya que esta definido en el manifest name del application
            AppController.getInstance().addToRequestQueue(jsonArrayRequest);
-
            //regresamos en el metodo esta lista de preguntas que ya ha pasado por la interfaz
             return questionArrayList;
 
